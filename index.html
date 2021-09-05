@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>外出登记二维码</title>
+  <link rel="stylesheet" href="style_new.css">
+
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css" />
+</head>
+
+<body>
+    <div id="app">
+      <div class="page-container" data-v-fae8cc3a="">
+        <div class="timer" data-v-fae8cc3a="">{{now_time}}</div>
+        <div class="ex-qrcode center qrcode" width="180" height="180" data-v-544d011e="" data-v-fae8cc3a=""><img
+            src="new_green.jpg" alt="" width="120" height="120"></canvas></div>
+        <div class="van-cell-group__title">外出时间</div>
+        <div class="van-cell-group van-hairline--top-bottom mg-b">
+          <div class="van-cell van-cell--large" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>离校时间</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span class="text-black" data-v-fae8cc3a=""
+                style="font-weight: bold;">{{t_min}} {{start_time}}</span></div>
+            <!---->
+            <!---->
+          </div>
+          <div class="van-cell van-cell--large" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>回校时间</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span class="text-black" data-v-fae8cc3a=""
+                style="font-weight: bold;">{{t_max}} {{end_time}}</span></div>
+            <!---->
+            <!---->
+          </div>
+        </div>
+        <div class="van-cell-group__title">学生信息</div>
+        <div class="van-cell-group van-hairline--top-bottom">
+          <div class="van-cell" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>姓名</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span>邝丽红</span></div>
+            <!---->
+            <!---->
+          </div>
+          <div class="van-cell" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>学号</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span>3219003958</span></div>
+            <!---->
+            <!---->
+          </div>
+          <div class="van-cell" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>学院</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span>管理学院</span></div>
+            <!---->
+            <!---->
+          </div>
+          <div class="van-cell" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title"><span>专业</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span>信息管理与信息系统</span></div>
+            <!---->
+            <!---->
+          </div>
+          <div class="van-cell" data-v-fae8cc3a="">
+            <!---->
+            <div class="van-cell__title" @click="showPopup()"><span>班级</span>
+              <!---->
+            </div>
+            <div class="van-cell__value"><span>信息管理与信息系统19(1)</span></div>
+            <!---->
+            <!---->
+          </div>
+        </div>
+      </div>
+    
+
+  <van-popup v-model="show">
+    <van-cell-group>
+      <van-field v-model="name" label="名字" placeholder="名字" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="id" label="学号" placeholder="学号" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="academy" label="学院" placeholder="学院" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="profession" label="专业" placeholder="专业" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="classes" label="班级" placeholder="班级" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="start_time" label="开始时间" placeholder="开始时间" />
+    </van-cell-group>
+    <van-cell-group>
+      <van-field v-model="end_time" label="结束时间" placeholder="结束时间" />
+    </van-cell-group>
+  </van-popup>
+</div>
+
+  <!-- 引入 Vue 和 Vant 的 JS 文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        name: '',
+        id: '',
+        academy: '',
+        profession: '',
+        classes: '',
+        now_time: '',
+        t_min: '',
+        t_max: '',
+        start_time: '08:00',
+        end_time: '18:00',
+        show: false
+      },
+      methods: {
+        showPopup() {
+          this.show = true;
+        },
+      },
+    })
+
+    Date.prototype.Format = function (fmt) {
+      var o = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S": this.getMilliseconds()
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : ((
+          "00" + o[k]).substr(("" + o[k]).length)));
+      return fmt;
+    }
+
+    var int = self.setInterval("clock()", 1000)
+
+    function clock() {
+      var t = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
+      app.now_time = t;
+    }
+
+    var t_min = (new Date()).Format("yyyy-MM-dd")
+    var t_max = (new Date()).Format("yyyy-MM-dd")
+    app.t_min = t_min
+    app.t_max = t_max
+  </script>
+</body>
+
+</html>
